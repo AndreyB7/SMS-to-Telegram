@@ -1,0 +1,36 @@
+# ==== Gradle ====
+.gradle/
+build/
+# per-module build dirs (app/build, etc.) are covered by the line above
+
+# ==== Android Studio / IntelliJ ====
+.idea/
+*.iml
+*.ipr
+*.iws
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ==== Local config — must NOT be committed (contains local SDK path) ====
+local.properties
+
+# ==== Signing / secrets ====
+*.jks
+*.keystore
+keystore.properties
+
+# ==== Build outputs ====
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ==== macOS ====
+.DS_Store
+
+# ==== Logs ====
+*.log
+
+# NOTE: gradle/wrapper/gradle-wrapper.jar IS committed on purpose —
+# it is part of the Gradle wrapper and required to build the project.
