@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SMS → Telegram</string>
+    <string name="app_name">SMS to Telegram</string>
 
     <string name="hint_token">Bot token (от @BotFather)</string>
     <string name="hint_chat_id">Chat ID</string>
@@ -8,6 +8,7 @@
     <string name="action_save">Сохранить</string>
     <string name="action_test">Отправить тестовое сообщение</string>
     <string name="action_grant">Запросить разрешение на SMS</string>
+    <string name="action_battery">Разрешить работу в фоне</string>
 
     <string name="saved">Настройки сохранены</string>
     <string name="fill_fields">Заполни токен и chat_id</string>
@@ -17,6 +18,9 @@
 
     <string name="perm_granted">✅ Разрешение на приём SMS выдано</string>
     <string name="perm_denied">⚠️ Разрешение на SMS не выдано — пересылка не работает</string>
+
+    <string name="battery_granted">✅ Работа в фоне разрешена (без оптимизации батареи)</string>
+    <string name="battery_denied">⚠️ Оптимизация батареи включена — приложение может засыпать</string>
 
     <string name="help_text">1. Создай бота через @BotFather и вставь токен.\n2. Напиши боту сообщение, открой https://api.telegram.org/bot&lt;ТОКЕН&gt;/getUpdates и возьми chat_id.\n3. Сохрани, выдай разрешение, отправь тест.\n4. Отключи оптимизацию батареи для приложения, чтобы оно не засыпало.</string>
 </resources>

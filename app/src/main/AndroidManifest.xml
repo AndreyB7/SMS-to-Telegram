@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <!-- Needed to send the message to Telegram over HTTPS -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Lets the app ask to be exempted from battery optimizations (Doze) -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:allowBackup="true"

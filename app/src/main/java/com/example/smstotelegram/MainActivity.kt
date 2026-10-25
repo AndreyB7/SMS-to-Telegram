@@ -1,8 +1,13 @@
 package com.example.smstotelegram
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -38,8 +43,20 @@ class MainActivity : AppCompatActivity() {
         binding.saveButton.setOnClickListener { save() }
         binding.testButton.setOnClickListener { sendTest() }
         binding.grantButton.setOnClickListener { ensureSmsPermission() }
+        binding.batteryButton.setOnClickListener { requestIgnoreBatteryOptimizations() }
 
+        refreshStatus()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // The battery dialog takes the user out of the app; re-check on return.
+        refreshStatus()
+    }
+
+    private fun refreshStatus() {
         updatePermissionStatus()
+        updateBatteryStatus()
     }
 
     private fun save() {
@@ -87,5 +104,34 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.perm_granted)
         else
             getString(R.string.perm_denied)
+    }
+
+    private fun isIgnoringBatteryOptimizations(): Boolean {
+        val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+        return pm.isIgnoringBatteryOptimizations(packageName)
+    }
+
+    @android.annotation.SuppressLint("BatteryLife")
+    private fun requestIgnoreBatteryOptimizations() {
+        if (isIgnoringBatteryOptimizations()) {
+            updateBatteryStatus()
+            return
+        }
+        val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+            data = Uri.parse("package:$packageName")
+        }
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            // Fallback: open the battery optimization settings list.
+            startActivity(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+        }
+    }
+
+    private fun updateBatteryStatus() {
+        binding.batteryStatus.text = if (isIgnoringBatteryOptimizations())
+            getString(R.string.battery_granted)
+        else
+            getString(R.string.battery_denied)
     }
 }
