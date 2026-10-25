@@ -9,6 +9,11 @@
     <string name="action_test">Send test message</string>
     <string name="action_grant">Request SMS permission</string>
     <string name="action_battery">Allow background work</string>
+    <string name="action_check">Check connection</string>
+
+    <string name="conn_checking">Checking connection…</string>
+    <string name="conn_available">✅ Bot service available — sending works</string>
+    <string name="conn_unavailable">⚠️ Bot service unavailable — check token/chat_id and internet</string>
 
     <string name="saved">Settings saved</string>
     <string name="fill_fields">Fill in the token and chat_id</string>

@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -44,8 +45,11 @@ class MainActivity : AppCompatActivity() {
         binding.testButton.setOnClickListener { sendTest() }
         binding.grantButton.setOnClickListener { ensureSmsPermission() }
         binding.batteryButton.setOnClickListener { requestIgnoreBatteryOptimizations() }
+        binding.checkButton.setOnClickListener { checkBotConnection() }
 
         refreshStatus()
+        // Check whether the bot service is reachable right at startup.
+        checkBotConnection()
     }
 
     override fun onResume() {
@@ -64,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         prefs.chatId = binding.chatIdInput.text?.toString().orEmpty()
         Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show()
         ensureSmsPermission()
+        // Re-check availability — the token/chat_id may have changed.
+        checkBotConnection()
     }
 
     private fun sendTest() {
@@ -133,5 +139,32 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.battery_granted)
         else
             getString(R.string.battery_denied)
+    }
+
+    /**
+     * Checks that the Telegram bot service is reachable (getMe) and updates the
+     * status line. On failure, reveals the "Check connection" button so the user
+     * can retry; on success the button is hidden.
+     */
+    private fun checkBotConnection() {
+        if (!prefs.isConfigured) {
+            binding.connectionStatus.text = getString(R.string.fill_fields)
+            binding.checkButton.visibility = View.GONE
+            return
+        }
+        binding.connectionStatus.text = getString(R.string.conn_checking)
+        binding.checkButton.visibility = View.GONE
+        lifecycleScope.launch {
+            val available = withContext(Dispatchers.IO) {
+                TelegramClient.checkConnection(prefs.botToken)
+            }
+            if (available) {
+                binding.connectionStatus.text = getString(R.string.conn_available)
+                binding.checkButton.visibility = View.GONE
+            } else {
+                binding.connectionStatus.text = getString(R.string.conn_unavailable)
+                binding.checkButton.visibility = View.VISIBLE
+            }
+        }
     }
 }

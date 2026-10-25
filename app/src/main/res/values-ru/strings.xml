@@ -9,6 +9,11 @@
     <string name="action_test">Отправить тестовое сообщение</string>
     <string name="action_grant">Запросить разрешение на SMS</string>
     <string name="action_battery">Разрешить работу в фоне</string>
+    <string name="action_check">Проверить подключение</string>
+
+    <string name="conn_checking">Проверка подключения…</string>
+    <string name="conn_available">✅ Сервис бота доступен — отправка работает</string>
+    <string name="conn_unavailable">⚠️ Сервис бота недоступен — проверь токен/chat_id и интернет</string>
 
     <string name="saved">Настройки сохранены</string>
     <string name="fill_fields">Заполни токен и chat_id</string>

@@ -54,5 +54,29 @@ object TelegramClient {
         }
     }
 
+    /**
+     * Checks that the Telegram Bot API is reachable and the token is valid,
+     * without sending any message (calls the getMe method).
+     * Blocking call — run it off the main thread. Returns true on HTTP 200.
+     */
+    fun checkConnection(botToken: String): Boolean {
+        if (botToken.isBlank()) return false
+        val endpoint = "https://api.telegram.org/bot$botToken/getMe"
+        var conn: HttpURLConnection? = null
+        return try {
+            conn = (URL(endpoint).openConnection() as HttpURLConnection).apply {
+                requestMethod = "GET"
+                connectTimeout = 10_000
+                readTimeout = 10_000
+            }
+            conn.responseCode == HttpURLConnection.HTTP_OK
+        } catch (e: Exception) {
+            Log.w(TAG, "Connection check failed", e)
+            false
+        } finally {
+            conn?.disconnect()
+        }
+    }
+
     private fun enc(s: String): String = URLEncoder.encode(s, "UTF-8")
 }
