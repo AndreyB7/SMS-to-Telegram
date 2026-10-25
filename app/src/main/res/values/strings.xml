@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SMS to Telegram</string>
+    <string name="app_name">SMS → Telegram</string>
 
-    <string name="hint_token">Bot token (от @BotFather)</string>
+    <string name="hint_token">Bot token (from @BotFather)</string>
     <string name="hint_chat_id">Chat ID</string>
 
-    <string name="action_save">Сохранить</string>
-    <string name="action_test">Отправить тестовое сообщение</string>
-    <string name="action_grant">Запросить разрешение на SMS</string>
-    <string name="action_battery">Разрешить работу в фоне</string>
+    <string name="action_save">Save</string>
+    <string name="action_test">Send test message</string>
+    <string name="action_grant">Request SMS permission</string>
+    <string name="action_battery">Allow background work</string>
 
-    <string name="saved">Настройки сохранены</string>
-    <string name="fill_fields">Заполни токен и chat_id</string>
-    <string name="test_message">✅ Тест: приложение подключено к Telegram</string>
-    <string name="test_ok">Отправлено! Проверь чат.</string>
-    <string name="test_fail">Не удалось отправить. Проверь токен/chat_id и интернет.</string>
+    <string name="saved">Settings saved</string>
+    <string name="fill_fields">Fill in the token and chat_id</string>
+    <string name="test_message">✅ Test: the app is connected to Telegram</string>
+    <string name="test_ok">Sent! Check the chat.</string>
+    <string name="test_fail">Failed to send. Check the token/chat_id and your internet connection.</string>
 
-    <string name="perm_granted">✅ Разрешение на приём SMS выдано</string>
-    <string name="perm_denied">⚠️ Разрешение на SMS не выдано — пересылка не работает</string>
+    <string name="perm_granted">✅ SMS receive permission granted</string>
+    <string name="perm_denied">⚠️ SMS permission not granted — forwarding will not work</string>
 
-    <string name="battery_granted">✅ Работа в фоне разрешена (без оптимизации батареи)</string>
-    <string name="battery_denied">⚠️ Оптимизация батареи включена — приложение может засыпать</string>
+    <string name="battery_granted">✅ Background work allowed (battery optimization off)</string>
+    <string name="battery_denied">⚠️ Battery optimization is on — the app may be put to sleep</string>
 
-    <string name="help_text">1. Создай бота через @BotFather и вставь токен.\n2. Напиши боту сообщение, открой https://api.telegram.org/bot&lt;ТОКЕН&gt;/getUpdates и возьми chat_id.\n3. Сохрани, выдай разрешение, отправь тест.\n4. Отключи оптимизацию батареи для приложения, чтобы оно не засыпало.</string>
+    <string name="help_text">1. Create a bot via @BotFather and paste the token.\n2. Send a message to your bot, open https://api.telegram.org/bot&lt;TOKEN&gt;/getUpdates and copy the chat_id.\n3. Save, grant the permission, send a test.\n4. Turn off battery optimization for the app so it does not go to sleep.</string>
 </resources>
