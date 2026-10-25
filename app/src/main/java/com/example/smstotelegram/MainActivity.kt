@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import com.example.smstotelegram.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,14 +40,21 @@ class MainActivity : AppCompatActivity() {
 
         prefs = Prefs(this)
         binding.tokenInput.setText(prefs.botToken)
-        binding.chatIdInput.setText(prefs.chatId)
 
-        binding.saveButton.setOnClickListener { save() }
         binding.testButton.setOnClickListener { sendTest() }
         binding.grantButton.setOnClickListener { ensureSmsPermission() }
         binding.batteryButton.setOnClickListener { requestIgnoreBatteryOptimizations() }
         binding.checkButton.setOnClickListener { checkBotConnection() }
+        binding.findChatButton.setOnClickListener { findChat() }
 
+        // Persist the token as it is typed — no Save button needed.
+        binding.tokenInput.doAfterTextChanged {
+            prefs.botToken = it?.toString().orEmpty()
+            updateTestEnabled()
+        }
+
+        updateChatStatus()
+        updateTestEnabled()
         refreshStatus()
         // Check whether the bot service is reachable right at startup.
         checkBotConnection()
@@ -63,17 +71,45 @@ class MainActivity : AppCompatActivity() {
         updateBatteryStatus()
     }
 
-    private fun save() {
-        prefs.botToken = binding.tokenInput.text?.toString().orEmpty()
-        prefs.chatId = binding.chatIdInput.text?.toString().orEmpty()
-        Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show()
-        ensureSmsPermission()
-        // Re-check availability — the token/chat_id may have changed.
-        checkBotConnection()
+    private fun findChat() {
+        val token = binding.tokenInput.text?.toString().orEmpty().trim()
+        if (token.isEmpty()) {
+            Toast.makeText(this, R.string.chat_need_token, Toast.LENGTH_SHORT).show()
+            return
+        }
+        prefs.botToken = token
+        binding.chatStatus.text = getString(R.string.chat_searching)
+        lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) { TelegramClient.findChat(token) }
+            when (result) {
+                is ChatLookup.Found -> {
+                    prefs.chatId = result.chatId
+                    prefs.chatName = result.chatName
+                    updateChatStatus()
+                    updateTestEnabled()
+                    checkBotConnection()
+                }
+                is ChatLookup.NoMessages ->
+                    binding.chatStatus.text = getString(R.string.chat_none)
+                is ChatLookup.Error ->
+                    binding.chatStatus.text = getString(R.string.chat_error, result.message)
+            }
+        }
+    }
+
+    private fun updateChatStatus() {
+        binding.chatStatus.text = if (prefs.chatId.isNotEmpty())
+            getString(R.string.chat_found, prefs.chatName, prefs.chatId)
+        else
+            getString(R.string.chat_not_set)
+    }
+
+    /** Test can be sent only once the token and chat are both set. */
+    private fun updateTestEnabled() {
+        binding.testButton.isEnabled = prefs.isConfigured
     }
 
     private fun sendTest() {
-        save()
         if (!prefs.isConfigured) {
             Toast.makeText(this, R.string.fill_fields, Toast.LENGTH_SHORT).show()
             return

@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SMS → Telegram</string>
+    <string name="app_name">SMS to Telegram</string>
 
     <string name="hint_token">Bot token (от @BotFather)</string>
-    <string name="hint_chat_id">Chat ID</string>
 
-    <string name="action_save">Сохранить</string>
     <string name="action_test">Отправить тестовое сообщение</string>
     <string name="action_grant">Запросить разрешение на SMS</string>
     <string name="action_battery">Разрешить работу в фоне</string>
     <string name="action_check">Проверить подключение</string>
+    <string name="action_find_chat">Найти чат</string>
 
     <string name="conn_checking">Проверка подключения…</string>
     <string name="conn_available">✅ Сервис бота доступен — отправка работает</string>
-    <string name="conn_unavailable">⚠️ Сервис бота недоступен — проверь токен/chat_id и интернет</string>
+    <string name="conn_unavailable">⚠️ Сервис бота недоступен — проверь токен и интернет</string>
 
-    <string name="saved">Настройки сохранены</string>
-    <string name="fill_fields">Заполни токен и chat_id</string>
+    <string name="chat_searching">Поиск чата…</string>
+    <string name="chat_found">✅ Чат: %1$s (%2$s)</string>
+    <string name="chat_not_set">Чат не выбран — нажми «Найти чат»</string>
+    <string name="chat_need_token">Сначала введи токен бота</string>
+    <string name="chat_none">⚠️ Сообщения не найдены. Открой Telegram, напиши боту любое сообщение и нажми «Найти чат».</string>
+    <string name="chat_error">⚠️ Ошибка поиска: %1$s</string>
+
+    <string name="fill_fields">Введи токен и найди чат</string>
     <string name="test_message">✅ Тест: приложение подключено к Telegram</string>
     <string name="test_ok">Отправлено! Проверь чат.</string>
-    <string name="test_fail">Не удалось отправить. Проверь токен/chat_id и интернет.</string>
+    <string name="test_fail">Не удалось отправить. Проверь токен/чат и интернет.</string>
 
     <string name="perm_granted">✅ Разрешение на приём SMS выдано</string>
     <string name="perm_denied">⚠️ Разрешение на SMS не выдано — пересылка не работает</string>
@@ -27,5 +32,5 @@
     <string name="battery_granted">✅ Работа в фоне разрешена (без оптимизации батареи)</string>
     <string name="battery_denied">⚠️ Оптимизация батареи включена — приложение может засыпать</string>
 
-    <string name="help_text">1. Создай бота через @BotFather и вставь токен.\n2. Напиши боту сообщение, открой https://api.telegram.org/bot&lt;ТОКЕН&gt;/getUpdates и возьми chat_id.\n3. Сохрани, выдай разрешение, отправь тест.\n4. Отключи оптимизацию батареи для приложения, чтобы оно не засыпало.</string>
+    <string name="help_text">1. Создай бота через @BotFather и вставь токен (сохраняется автоматически).\n2. Открой Telegram и напиши боту любое сообщение.\n3. Нажми «Найти чат» — приложение определит чат автоматически.\n4. Выдай разрешение на SMS и отправь тест.\n5. Отключи оптимизацию батареи, чтобы приложение не засыпало.</string>
 </resources>
